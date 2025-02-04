@@ -53,15 +53,21 @@ def condiciones_winner(simbolos: dict):
 if __name__ == '__main__':
     simbolos = {str(x): str(x) for x in range(1, 10)}
     ganador = None
+    turnos = 0
     
-    while not ganador:
+    while not ganador and turnos < 9:
         dibujar_tablero(simbolos)
         usuario(simbolos)
+        turnos += 1
         ganador = condiciones_winner(simbolos)
-        if ganador:
+        if ganador or turnos == 9:
             break
         ia(simbolos)
+        turnos += 1
         ganador = condiciones_winner(simbolos)
     
     dibujar_tablero(simbolos)
-    print(f'¡El ganador es {ganador}!')
+    if ganador:
+        print(f'¡El ganador es {ganador}!')
+    else:
+        print('¡Es un empate!')
