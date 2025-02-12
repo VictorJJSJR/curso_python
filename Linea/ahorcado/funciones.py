@@ -1,5 +1,7 @@
 import string
 import unicodedata
+from random import choice #Solo importamos choice de la libreria random
+
 '''
 funciones auxiliares del juego Ahorcado
 '''
