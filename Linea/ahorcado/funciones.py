@@ -4,6 +4,8 @@ funciones auxiliares del juego Ahorcado
 import string
 import unicodedata
 from random import choice
+from os import system
+
 
 def carga_archivo_texto(archivo:str)->list:
     '''
@@ -19,7 +21,8 @@ def carga_plantillas(nombre_plantilla:str)->dict:
     '''
     plantillas = {}
     for i in range(6):
-        plantillas[i] = carga_archivo_texto(f'./plantillas/{nombre_plantilla}-{i}.txt')
+        plantillas[i] = carga_archivo_texto(f'C:/Users/vjjs0/OneDrive/Escritorio/curso_python/Linea/ahorcado/plantillas/{nombre_plantilla}-{i}.txt')
+        #plantillas[i] = carga_archivo_texto(f'./plantillas/{nombre_plantilla}-{i}.txt')
     return plantillas
 
 def despliega_plantilla(diccionario:dict, nivel:int):
@@ -58,25 +61,33 @@ def adivina_letra(abc:dict, palabra:str, letras_adivinadas:set, turnos:int):
             palabra_oculta += letra
         else:
             palabra_oculta += "_"
+
     print(f'Tienes {turnos} oportunidades de fallar')
     print(f'El abecedario es: {abc}')
     print(f'La palabra es: {palabra_oculta}')
-    letra = input('Ingresa una letra: ')
-    letra = letra.lower()
+    
+    letra = input('Ingresa una letra: ').lower()
+    
     if letra in abc:
         if abc[letra] == "*":
             print('Ya adivinaste esa letra')
         else:
-            abc[letra]= "*"
+            abc[letra] = "*"
             if letra in palabra:
                 letras_adivinadas.add(letra)
             else:
-                turnos -= 1
+                turnos -= 1  # Reduce las oportunidades al fallar
+    
+    return turnos  # Asegura que la función devuelva el valor actualizado
+
+
+
 
 if __name__ == '__main__':
     plantillas = carga_plantillas('plantilla')
     despliega_plantilla(plantillas, 5)
-    lista_oraciones = carga_archivo_texto('./datos/pg15532.txt')
+    lista_oraciones = carga_archivo_texto('C:/Users/vjjs0/OneDrive/Escritorio/curso_python/Linea/ahorcado/datos/pg15532.txt')
+    #lista_oraciones = carga_archivo_texto('./datos/pg15532.txt')
     lista_palabras = obten_palabras(lista_oraciones)
     print(len(lista_palabras))
     p = choice(lista_palabras)
@@ -86,3 +97,4 @@ if __name__ == '__main__':
     t = 5 # oportunidades
     adivina_letra(abcdario, p, adivinadas, t)
     adivina_letra(abcdario, p, adivinadas, t)
+    print(t)
