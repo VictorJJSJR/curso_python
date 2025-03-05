@@ -50,6 +50,33 @@ def condiciones_winner(simbolos: dict):
     
     return None
 
+def actualiza_score(score: dict, ganador: str):
+    '''Actualiza el score'''
+    x = score["X"]
+    o = score["O"]
+    if ganador is not None:
+        print(f'¡El ganador es {ganador}!')
+        if ganador == 'X':
+            x["G"] += 1
+            o["P"] += 1
+        elif ganador == 'O':
+            o["G"] += 1
+            x["P"] += 1
+
+    else:
+        print('¡Es un empate!')
+        x["E"] += 1
+        o["E"] += 1
+
+
+def despliega_tablero(score:dict):
+    '''Despliega el tablero'''	
+    print(f'''
+          X | G: {score["X"]["G"]} | P: {score["X"]["P"]} | E: {score["X"]["E"]}
+            O | G: {score["O"]["G"]} | P: {score["O"]["P"]} | E: {score["O"]["E"]}
+    ''')
+
+
 if __name__ == '__main__':
     simbolos = {str(x): str(x) for x in range(1, 10)}
     ganador = None
